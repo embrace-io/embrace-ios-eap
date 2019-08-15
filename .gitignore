@@ -6,7 +6,6 @@
 build/
 DerivedData/
 Output/
-Embrace.framework/
 
 ## Various settings
 *.pbxuser
