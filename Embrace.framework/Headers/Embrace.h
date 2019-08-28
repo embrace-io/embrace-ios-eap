@@ -319,6 +319,26 @@ FOUNDATION_EXPORT const unsigned char EmbraceVersionString[];
 - (void)logHandledError:(NSError *)error screenshot:(BOOL)screenshot properties:(NSDictionary *)properties;
 
 /**
+ 
+ */
+- (void)logUnhandledJSException:(NSString *)name message:(NSString *)message type:(NSString *)type stackTrace:(NSString *)stackTrace;
+
+/**
+
+ */
+- (void)setReactNativeVersion:(NSString *)version;
+
+/**
+ 
+ */
+- (void)setJavaScriptPatchNumber:(NSString *)number;
+
+/**
+ 
+ */
+- (void)setJavaScriptBundleURL:(NSString *)url;
+
+/**
  Logs a custom message within this session for the Embrace dashboard to surface on the Session Timeline and within
  the Activity Log.
  

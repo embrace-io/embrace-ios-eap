@@ -5,6 +5,8 @@ EMBRACE_DSYM_SEARCH_DEPTH=3
 # set this value to suppress warnings about needing to upload dSYMs manually when Bitcode is enabled
 DISABLE_BITCODE_CHECK=
 
+[ -n "$CONFIGURATION_BUILD_DIR" -a -n "$UNLOCALIZED_RESOURCES_FOLDER_PATH" ] && REACT_NATIVE_BUNDLE_PATH_DEFAULT="$CONFIGURATION_BUILD_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH/main.jsbundle"
+
 function log () {
     # xcode will mark log lines as warnings and errors if prefixed with the values below. the prefixes are removed and error and warning markers replace them.
     case $2 in
@@ -38,13 +40,75 @@ function run() {
         # we must redirect both stdout and stderr to /dev/null to have Xcode run this script in the background and move on to other build tasks
         eval $1 > /dev/null 2>&1 &
     else
-        log "running upload command: $1"
         eval $1
     fi
 }
 
+function react_native_upload() {
+    react_bundle_path=
+    # If no bundle path is provided then we check for the existence of the bundle in the default path.
+    # If we find the default bundle file we assume it is a React Native app. If a bundle path is specified
+    # we use that instead.
+    if [ -z "$REACT_NATIVE_BUNDLE_PATH" ] ; then
+        react_bundle_path="${REACT_NATIVE_BUNDLE_PATH_DEFAULT}"
+    else
+        react_bundle_path="${REACT_NATIVE_BUNDLE_PATH}"
+    fi
+
+    if [ ! -f "$react_bundle_path" ] ; then
+      if [ -n "$REACT_NATIVE_BUNDLE_PATH" ] ; then
+        log_warning "Could not find JavaScript bundle ${react_bundle_path}. Exiting early."
+      fi
+
+      return
+    fi
+
+    react_map_path="${REACT_NATIVE_MAP_PATH}"
+    if [ -z "$REACT_NATIVE_MAP_PATH" ] ; then
+        react_map_path="${react_bundle_path}.map"
+    fi
+
+    if [ ! -f "$react_map_path" ] ; then
+      if [ -n "$REACT_NATIVE_MAP_PATH" ] ; then
+        log_warning "Could not find JavaScript map at ${react_map_path}. Exiting early."
+      fi
+
+      return
+    fi
+
+    react_args="--rn-bundle ${react_bundle_path}  --rn-map ${react_map_path}"
+    # If this is a debug build or if they explicitly say this is not a RN app then do not set bundle path.
+    # This means that we will not upload the JS bundle
+    if [ -n "$react_args" ] ; then
+        if [ "$CONFIGURATION" = "Debug" ] || [ "$REACT_NATIVE" = "0" ] ; then
+            react_args=
+        fi
+        if [ "$CONFIGURATION" = "Debug" ] ; then
+            log "Debug build detected. Will not upload React Native bundle."
+        elif [ "$REACT_NATIVE" = "0" ] ; then
+            log "REACT_NATIVE=0. Will not upload React Native bundle."
+        fi
+    fi
+
+    if [ -n "$react_args" ] ; then
+        log "uploading react native resources with bundle at ${react_bundle_path} and map at ${react_map_path}"
+        run "\"$DIR\"/upload --app $EMBRACE_ID --token $EMBRACE_TOKEN $react_args"
+    fi
+}
 
 function upload() {
+    react_native_upload
+
+    # If CodePush is specified, don't bother trying to upload dSYMs.
+    if [ -n "$CODE_PUSH_UPLOAD" ]; then
+        return
+    fi
+
+    if [ -z "$BUILD_ROOT" ]
+    then
+      log_error "Missing BUILD_ROOT environment variable. Are you running this from a build step in XCode? Skipping upload."
+      exit 1
+    fi
     cd "$BUILD_ROOT"
 
     # if we can't find the files we are looking for with globs, we want nulls
@@ -57,6 +121,7 @@ function upload() {
         log "DWARF_DSYM_FILE_NAME and/or DWARF_DSYM_FOLDER_PATH envvars not defined. Attempting to find dSYM file using glob." "warning"
         app_dsym_path=*/*.dSYM/*/Resources/DWARF/
     fi
+
 
     log "Looking for app dSYM in $app_dsym_path"
 
@@ -73,12 +138,11 @@ function upload() {
     if [ -n "$found" ] ; then
         icon=$(echo "$PWD"/*/*.xcassets/AppIcon.appiconset/Icon-60@2x.png | head -n 1)
         if [ -n "$icon" ] ; then
-          icon_arg="-icon $icon"
+          icon_arg="--icon $icon"
         else
           icon_arg=""
         fi
-
-        run "\"$DIR\"/upload -app $EMBRACE_ID -token $EMBRACE_TOKEN $icon_arg \"$app_dsym_file\""
+        run "\"$DIR\"/upload --app $EMBRACE_ID --token $EMBRACE_TOKEN $icon_arg --dsym \"$app_dsym_file\""
     else
         log_warning "No app dSYM file was found under BUILD_ROOT ${BUILD_ROOT}. Skipping upload."
     fi
@@ -97,7 +161,7 @@ function upload() {
             dsym_args="$dsym_args \"$dsym_full_path\""
         done
         IFS=$ORIG_IFS
-        run "\"$DIR\"/upload -app $EMBRACE_ID -token $EMBRACE_TOKEN $dsym_args"
+        run "\"$DIR\"/upload --app $EMBRACE_ID --token $EMBRACE_TOKEN --dsym $dsym_args"
     fi
 }
 
@@ -131,11 +195,6 @@ fi
 
 log "Using app ID ${EMBRACE_ID} and API token ${EMBRACE_TOKEN}"
 
-if [ -z "$BUILD_ROOT" ]
-then
-  log_error "Missing BUILD_ROOT environment variable. Are you running this from a build step in XCode? Skipping upload."
-  exit 1
-fi
 
 # if we have data about the configured debug format, use it. we may not have this setting though if we are running in certain CI environments, so do not exit if it is not set.
 if [ -n "$DEBUG_INFORMATION_FORMAT" ] ; then
