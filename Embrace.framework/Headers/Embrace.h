@@ -481,4 +481,6 @@ FOUNDATION_EXPORT const unsigned char EmbraceVersionString[];
 
 - (void)setDebuggingEnabled:(BOOL)enabled;
 
+- (void)setTraceEnabled:(BOOL)enabled;
+
 @end
