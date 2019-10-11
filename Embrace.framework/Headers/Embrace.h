@@ -18,6 +18,7 @@ FOUNDATION_EXPORT const unsigned char EmbraceVersionString[];
 #import "EMBPurchaseFlow.h"
 #import "EMBRegistrationFlow.h"
 #import "EMBSubscriptionPurchaseFlow.h"
+#import "RNEmbrace.h"
 
 // Public Embrace API for use by developers
 
@@ -319,26 +320,6 @@ FOUNDATION_EXPORT const unsigned char EmbraceVersionString[];
 - (void)logHandledError:(NSError *)error screenshot:(BOOL)screenshot properties:(NSDictionary *)properties;
 
 /**
- 
- */
-- (void)logUnhandledJSException:(NSString *)name message:(NSString *)message type:(NSString *)type stackTrace:(NSString *)stackTrace;
-
-/**
-
- */
-- (void)setReactNativeVersion:(NSString *)version;
-
-/**
- 
- */
-- (void)setJavaScriptPatchNumber:(NSString *)number;
-
-/**
- 
- */
-- (void)setJavaScriptBundleURL:(NSString *)url;
-
-/**
  Logs a custom message within this session for the Embrace dashboard to surface on the Session Timeline and within
  the Activity Log.
  
@@ -435,38 +416,14 @@ FOUNDATION_EXPORT const unsigned char EmbraceVersionString[];
 - (void)logURLSessionTaskMetrics:(NSURLSessionTaskMetrics *)metrics forURLSessionTask:(NSURLSessionTask *)task DEPRECATED_MSG_ATTRIBUTE("NSURLSessionTaskMetrics interactions are now recorded automatically by the SDK. This method will be removed in future versions.");
 
 /**
+ DEPRECATED
+
  Inform Embrace that a web view began a request that you'd like to have monitored. In order for data to be captured,
  ensure that you call `logWebViewCompletedRequest:` after the request is finished.
  
- We recommend calling this in the `- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType`
- callback of your UIWebViewDelegate.
- 
  @param request The NSURLRequest whose performance you'd like to instrument.
  */
-- (void)logWebViewBeganRequest:(NSURLRequest *)request DEPRECATED_MSG_ATTRIBUTE("UIWebView interactions are now recorded automatically by the SDK. This method will be removed in future versions.");
-
-/**
- Inform Embrace that a web view completed a request. The `logWebViewBeganRequest:` method must have been called
- when this request was first created in order for instrumentation to function properly.
- 
- We recommend calling this in the `- (void)webViewDidFinishLoad:(UIWebView *)webView` callback of your
- UIWebViewDelegate.
- 
- @param webView The UIWebView whose request you'd like to monitor.
- */
-- (void)logWebViewCompletedRequest:(UIWebView *)webView DEPRECATED_MSG_ATTRIBUTE("UIWebView interactions are now recorded automatically by the SDK. This method will be removed in future versions.");
-
-/**
- Inform Embrace that a web view completed a request. The `logWebViewBeganRequest:` method must have been called
- when this request was first created in order for instrumentation to function properly.
- 
- We recommend calling this in the `- (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error` callback of your
- UIWebViewDelegate.
- 
- @param webView The UIWebView whose request you'd like to monitor.
- @param error The NSError you'd like to monitor.
- */
-- (void)logWebViewCompletedRequest:(UIWebView *)webView withError:(NSError *)error DEPRECATED_MSG_ATTRIBUTE("UIWebView interactions are now recorded automatically by the SDK. This method will be removed in future versions.");
+- (void)logWebViewBeganRequest:(NSURLRequest *)request DEPRECATED_MSG_ATTRIBUTE("WKWebView interactions are now recorded automatically by the SDK. This method will be removed in future versions.");
 
 /**
  Cause a crash. Use this for test purposes only
@@ -478,9 +435,14 @@ FOUNDATION_EXPORT const unsigned char EmbraceVersionString[];
  */
 - (void)throwException;
 
+/**
 
+*/
 - (void)setDebuggingEnabled:(BOOL)enabled;
 
+/**
+
+*/
 - (void)setTraceEnabled:(BOOL)enabled;
 
 @end
