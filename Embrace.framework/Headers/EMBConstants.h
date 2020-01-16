@@ -9,9 +9,9 @@
 #import <Foundation/Foundation.h>
 
 #ifndef DEBUG
-#define EMBLogDefaultLevel EMBLogLevelInfo;
+#define EMBLogDefaultLevel EMBLogLevelInfo
 #else
-#define EMBLogDefaultLevel EMBLogLevelDebug;
+#define EMBLogDefaultLevel EMBLogLevelDebug
 #endif
 
 typedef NS_ENUM(NSInteger, EMBLogLevel) {
@@ -33,5 +33,7 @@ typedef NS_ENUM(NSInteger, EMBAppFramework) {
     EMBAppFrameworkNative = 1,
     EMBAppFrameworkReactNative,
 };
+
+typedef NSDictionary<NSString *, NSString *> EMBProperties;
 
 extern NSString *const EMBBundleIdentifier;

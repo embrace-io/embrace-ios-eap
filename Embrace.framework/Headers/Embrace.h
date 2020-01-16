@@ -140,7 +140,7 @@ FOUNDATION_EXPORT const unsigned char EmbraceVersionString[];
  Marks the end of the "App Startup" event with optional properties added
  @param properties An optional dictionary containing metadata about the moment to be recorded (limited to 10 keys).
  */
-- (void)endAppStartupWithProperties:(NSDictionary *)properties;
+- (void)endAppStartupWithProperties:(EMBProperties *)properties;
 
 /**
  Starts recording data for an app moment with the provided name.
@@ -185,7 +185,7 @@ FOUNDATION_EXPORT const unsigned char EmbraceVersionString[];
  @param identifier An identifier that is combined with the name to create a unique key for the moment (can be nil).
  @param properties An optional dictionary containing metadata about the moment to be recorded (limited to 10 keys).
  */
-- (void)startMomentWithName:(NSString *)name identifier:(NSString *)identifier properties:(NSDictionary *)properties;
+- (void)startMomentWithName:(NSString *)name identifier:(NSString *)identifier properties:(EMBProperties *)properties;
 
 /**
  Starts recording data for an app moment with the provided name, optional identifier, screenshot flag, and optional key/value metadata
@@ -195,8 +195,8 @@ FOUNDATION_EXPORT const unsigned char EmbraceVersionString[];
  @param allowScreenshot A flag for whether to take a screenshot if the moment is late (defaults to YES).
  @param properties An optional dictionary containing metadata about the moment to be recorded (limited to 10 keys).
  */
-- (void)beginEventWithName:(NSString *)name identifier:(NSString *)identifier allowScreenshot:(BOOL)allowScreenshot properties:(NSDictionary *)properties DEPRECATED_MSG_ATTRIBUTE("Please replace calls to start app moments with methods of the form startMomentWithName:identifier:allowScreenshot:properties:");
-- (void)startMomentWithName:(NSString *)name identifier:(NSString *)identifier allowScreenshot:(BOOL)allowScreenshot properties:(NSDictionary *)properties;
+- (void)beginEventWithName:(NSString *)name identifier:(NSString *)identifier allowScreenshot:(BOOL)allowScreenshot properties:(EMBProperties *)properties DEPRECATED_MSG_ATTRIBUTE("Please replace calls to start app moments with methods of the form startMomentWithName:identifier:allowScreenshot:properties:");
+- (void)startMomentWithName:(NSString *)name identifier:(NSString *)identifier allowScreenshot:(BOOL)allowScreenshot properties:(EMBProperties *)properties;
 
 /**
  Stops recording data for an app moment with the provided name.
@@ -220,7 +220,7 @@ FOUNDATION_EXPORT const unsigned char EmbraceVersionString[];
  @param name The name used to identify the moment.
  @param properties An optional dictionary containing metadata about the moment to be recorded (limited to 10 keys).
  */
-- (void)endMomentWithName:(NSString *)name properties:(NSDictionary *)properties;
+- (void)endMomentWithName:(NSString *)name properties:(EMBProperties *)properties;
 
 
 /**
@@ -246,7 +246,7 @@ FOUNDATION_EXPORT const unsigned char EmbraceVersionString[];
  @param identifier An identifier that is combined with the name to uniquely identify the moment.
  @param properties An optional dictionary containing metadata about the moment to be recorded (limited to 10 keys).
  */
-- (void)endMomentWithName:(NSString *)name identifier:(NSString *)identifier properties:(NSDictionary *)properties;
+- (void)endMomentWithName:(NSString *)name identifier:(NSString *)identifier properties:(EMBProperties *)properties;
 
 /**
  Logs an event in your application for aggregation and debugging on the Embrace.io dashboard.
@@ -266,7 +266,7 @@ FOUNDATION_EXPORT const unsigned char EmbraceVersionString[];
  @param severity Will flag the message as one of info, warning, or error for filtering on the dashboard
  @param properties An optional dictionary of up to 10 key/value pairs
  */
-- (void)logMessage:(NSString *)name withSeverity:(EMBSeverity)severity properties:(NSDictionary *)properties;
+- (void)logMessage:(NSString *)name withSeverity:(EMBSeverity)severity properties:(EMBProperties *)properties;
 
 /**
  Logs an event in your application for aggregation and debugging on the Embrace.io dashboard
@@ -277,7 +277,7 @@ FOUNDATION_EXPORT const unsigned char EmbraceVersionString[];
  @param properties An optional dictionary of up to 10 key/value pairs
  @param takeScreenshot A flag for whether the SDK should take a screenshot of the application window to display on the dashboard
  */
-- (void)logMessage:(NSString *)name withSeverity:(EMBSeverity)severity properties:(NSDictionary *)properties takeScreenshot:(BOOL)takeScreenshot;
+- (void)logMessage:(NSString *)name withSeverity:(EMBSeverity)severity properties:(EMBProperties *)properties takeScreenshot:(BOOL)takeScreenshot;
 
 /**
  Logs an informative message to the Embrace.io API for aggregation and viewing on the dashboard.
@@ -285,7 +285,7 @@ FOUNDATION_EXPORT const unsigned char EmbraceVersionString[];
  @param message The message used to find the log later, which is how it will be aggregated on the web dashboard
  @param properties An optional dictionary of custom key/value properties to be sent with the message
  */
-- (void)logInfoMessage:(NSString *)message properties:(NSDictionary *)properties DEPRECATED_MSG_ATTRIBUTE("Please replace calls to log info messages with methods of the form logMessage:withSeverity:");
+- (void)logInfoMessage:(NSString *)message properties:(EMBProperties *)properties DEPRECATED_MSG_ATTRIBUTE("Please replace calls to log info messages with methods of the form logMessage:withSeverity:");
 
 /**
  Logs a warning message to the Embrace.io API for aggregation and viewing on the dashboard. Unlike info messages,
@@ -295,7 +295,7 @@ FOUNDATION_EXPORT const unsigned char EmbraceVersionString[];
  @param screenshot A flag for whether to take a screenshot or not.
  @param properties An optional dictionary of custom key/value properties to be sent with the warning log.
  */
-- (void)logWarningMessage:(NSString *)message screenshot:(BOOL)screenshot properties:(NSDictionary *)properties DEPRECATED_MSG_ATTRIBUTE("Please replace calls to log warning messages with methods of the form logMessage:withSeverity:");
+- (void)logWarningMessage:(NSString *)message screenshot:(BOOL)screenshot properties:(EMBProperties *)properties DEPRECATED_MSG_ATTRIBUTE("Please replace calls to log warning messages with methods of the form logMessage:withSeverity:");
 
 /**
  Logs an error message to the Embrace.io API for aggregation and viewing on the dashboard. Unlike info messages,
@@ -305,7 +305,7 @@ FOUNDATION_EXPORT const unsigned char EmbraceVersionString[];
  @param screenshot A flag for whether to take a screenshot or not.
  @param properties An optional dictionary of custom key/value properties to be sent with the error log.
  */
-- (void)logErrorMessage:(NSString *)message screenshot:(BOOL)screenshot properties:(NSDictionary *)properties DEPRECATED_MSG_ATTRIBUTE("Please replace calls to log error messages with methods of the form logMessage:withSeverity:");
+- (void)logErrorMessage:(NSString *)message screenshot:(BOOL)screenshot properties:(EMBProperties *)properties DEPRECATED_MSG_ATTRIBUTE("Please replace calls to log error messages with methods of the form logMessage:withSeverity:");
 
 /**
  Logs an Error or NSError object to the Embrace.io API for aggregation on the dashboard. These errors will be treated similarly to
@@ -317,7 +317,7 @@ FOUNDATION_EXPORT const unsigned char EmbraceVersionString[];
  @param screenshot A flag for whether to take a screenshot or not.
  @param properties An optional dictionary of custom key/value properties to be sent with the error log.
  */
-- (void)logHandledError:(NSError *)error screenshot:(BOOL)screenshot properties:(NSDictionary *)properties;
+- (void)logHandledError:(NSError *)error screenshot:(BOOL)screenshot properties:(EMBProperties *)properties;
 
 /**
  Logs a custom message within this session for the Embrace dashboard to surface on the Session Timeline and within

@@ -34,21 +34,19 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property(atomic, strong, readonly, nonnull) NSString *APIKey;
 @property(atomic, strong, readonly, nullable) NSNumber *maxSessionSeconds;
-@property(atomic, strong, readonly, nullable) NSDictionary<NSString *, NSNumber *> *networkCaptureDomains;
 @property(atomic, strong, readonly, nullable) NSString *configBaseURL;
 @property(atomic, strong, readonly, nullable) NSString *baseURL;
 @property(atomic, strong, readonly, nullable) NSString *devBaseURL;
 @property(atomic, strong, readonly, nullable) NSString *imagesBaseURL;
-@property(atomic, assign, readonly) BOOL crashReportEnabled;
-@property(atomic, assign, readonly) NSInteger networkCaptureLimit;
 @property(atomic, assign, readonly) BOOL nsurlconnectionProxyEnable;
 @property(atomic, assign, readonly) BOOL startupScreenshotEnabled;
 @property(atomic, assign, readonly) BOOL webviewStripQueryparams;
 @property(atomic, assign, readonly) BOOL webviewEnable;
 @property(atomic, assign, readonly) BOOL backgroundFetchCaptureEnable;
+@property(atomic, assign, readonly) BOOL captureCoordinatesEnabled;
 @property(atomic, assign, readonly) BOOL collectNetworkRequestMetrics;
-@property(atomic, assign, readonly) NSUInteger startupAutoendSeconds;
 @property(atomic, strong, readonly) NSString *traceIdHeader;
+@property(atomic, strong, readonly) NSString *networkCapturePublicKey;
 
 @end
 
