@@ -25,11 +25,12 @@ Settings can be specified in an `Embrace-Info.plist` file, which must be include
 |CRASH_REPORT_ENABLED|bool|false|Enable Embrace crash reporting.|
 |STARTUP_MOMENT_SCREENSHOT_ENABLED|bool|true|Control whether screenshots are captured by startup moment.|
 |TRACE_ID_HEADER_NAME|string|x-emb-trace-id|Sets name of the HTTP request header to extract trace ID from.|
-|NETWORK[DOMAINS] |dictionary|{}||
-|NETWORK[DEFAULT_CAPTURE_LIMIT] |integer|1000|The maximum number of requests that will be captured for a given domain in a session.|
-|MAX_SESSION_SECONDS|integer|nil|Enables timed session mode when set, which will terminate each active session after the given number of secconds has passed.|
+|NETWORK[DOMAINS] |dictionary[string:integer]|{}|A list of domains with custom, per-session request capture limits.|
+|NETWORK[DEFAULT_CAPTURE_LIMIT] |integer|1000|The default maximum number of requests that will be captured for a given domain in a session.  Applies for domains not in DOMAINS dictionary.|
+|MAX_SESSION_SECONDS|integer|nil|Enables timed session mode when set, which will terminate each active session after the given number of seconds has passed.|
 |WEBVIEW_ENABLE|bool|true|Control whether webview information is captured|
 |WEBVIEW_STRIP_QUERYPARAMS|bool|false|Control whether webview query parameters are captured|
+|ENABLE_AUTOMATIC_VIEW_CAPTURE|bool|true|Control whether automatic view capture is enabled, disable this if you are using custom view API|
 
 ## Logging guidelines
 

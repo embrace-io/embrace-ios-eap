@@ -45,6 +45,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(atomic, assign, readonly) BOOL backgroundFetchCaptureEnable;
 @property(atomic, assign, readonly) BOOL captureCoordinatesEnabled;
 @property(atomic, assign, readonly) BOOL collectNetworkRequestMetrics;
+@property(atomic, assign, readonly) BOOL automaticViewCaptureEnabled;
 @property(atomic, strong, readonly) NSString *traceIdHeader;
 @property(atomic, strong, readonly) NSString *networkCapturePublicKey;
 

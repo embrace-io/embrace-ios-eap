@@ -39,12 +39,23 @@
 - (void)setJavaScriptBundleURL:(NSString *)url;
 
 /**
-
+ log a RN exception through the native embrace sdk
 */
 - (void)logMessage:(NSString *)name
       withSeverity:(EMBSeverity)severity
         properties:(NSDictionary *)properties
     takeScreenshot:(BOOL)takeScreenshot
       jsStackTrace:(NSString *)jsStackTrace;
+
+/**
+ log a RN exception through the native embrace sdk
+ and mark it as handled or not.
+*/
+- (void)logMessage:(NSString *)name
+      withSeverity:(EMBSeverity)severity
+        properties:(NSDictionary *)properties
+    takeScreenshot:(BOOL)takeScreenshot
+      jsStackTrace:(NSString *)jsStackTrace
+        wasHandled:(BOOL)wasHandled;
 
 @end

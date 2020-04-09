@@ -249,6 +249,62 @@ FOUNDATION_EXPORT const unsigned char EmbraceVersionString[];
 - (void)endMomentWithName:(NSString *)name identifier:(NSString *)identifier properties:(EMBProperties *)properties;
 
 /**
+ Annotates the session with a new property.  Use this to track permanent and ephemeral features of the session.
+ A permanent property is added to all sessions submitted from this device, use this for properties such as work site, building, owner
+ A non-permanent property is added to only the currently active session.
+ 
+ There is a maximum of 10 total properties in a session.
+ 
+ @param value The value to store for this property
+ @param key The key for this property, must be unique within session properties
+ @param permanent If true the property is applied to all sessions going forward, persist through app launches.
+ 
+ @return A boolean indicating whether the property was added or not, see console log for details
+ */
+- (bool)addSessionProperty:(NSString *)value withKey:(NSString *)key permanent:(BOOL)permanent;
+
+/**
+ Removes a property from the session.  If that property was permanent then it is removed from all future sessions as well.
+ 
+ @param key The key for the property you wish to remove
+ */
+- (void)removeSessionPropertyWithKey:(NSString *)key;
+
+/**
+ Get a read-only representation of the currently set session properties.  You can query and read from this representation however setting values in this object will not modify the actual properties in the session.
+ To modify session properties see addSessionProperty.
+ 
+ Properties are key-value pairs of NSString * objects.
+ */
+- (NSDictionary *)getSessionProperties;
+
+/** Embrace ships with automatic view capturing enabled.  In this mode the SDK attempts to track and annotate all your view
+ Presentations and logs them in the session.  In complex apps, or apps with unconvential UI (spritekit, swiftui, react) automatic capture
+ might be unreliable or too noisy to be useful
+ 
+ For such apps we also provide a manual view annotation API.  Using this API you decide when your app has entered and exited
+ a view.  Maybe you want to consolidate many views under a single header (i.e. "ProfileView", instead of many individual labels).
+
+ To use the API simply call "startViewWithName" whenever your app has entered a new view state and then call "endViewWithName"
+ when the app exits that view state.  View states stack up to 20 levels deep and view states automatically close on session end.  This function will
+ log a warning if you attempt to start a view that is already on the stack, or close a view that is not on the stack.
+ 
+ @param name The name for this view state
+ @return a boolean indicating whether the operation was successful or not (see console log for reasoning)
+ */
+- (bool)startViewWithName:(NSString *)name;
+
+/**
+ @see startViewWithName for full discussion of the manual view annotation system
+ 
+ The endViewWithName function with close the view state for the specified view or log a warning if the view is not found
+ 
+ @param name The name for this view state
+ @return a boolean indicating whether the operation was successful or not (see console log for reasoning)
+ */
+- (bool)endViewWithName:(NSString *)name;
+
+/**
  Logs an event in your application for aggregation and debugging on the Embrace.io dashboard.
  
  Events are grouped by name and severity.
@@ -404,7 +460,8 @@ FOUNDATION_EXPORT const unsigned char EmbraceVersionString[];
 - (void)clearAllUserPersonas;
 
 /**
- Manually log a network request. In most cases the Embrace SDK
+ Manually log a network request. In most cases the Embrace SDK automatically captures the details of your network requests.  
+ You can use this method to log any requests that the SDK is not capturing automatically.
 
  @param request An EMBNetworkRequest with at least the following set: url, method, start time, end time, and either status code or error.
  */
@@ -436,13 +493,18 @@ FOUNDATION_EXPORT const unsigned char EmbraceVersionString[];
 - (void)throwException;
 
 /**
-
+Enables or disables embrace's internal debug logging.
 */
 - (void)setDebuggingEnabled:(BOOL)enabled;
 
 /**
-
+Enables or disables embrace's internal trace logging.
 */
 - (void)setTraceEnabled:(BOOL)enabled;
+
+/**
+ Enables or disables embrace's clean logging format
+ */
+- (void)setCleanLogsEnabled:(BOOL)enabled;
 
 @end
