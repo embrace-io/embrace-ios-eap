@@ -38,6 +38,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(atomic, strong, readonly, nullable) NSString *baseURL;
 @property(atomic, strong, readonly, nullable) NSString *devBaseURL;
 @property(atomic, strong, readonly, nullable) NSString *imagesBaseURL;
+@property(atomic, strong, readonly) NSArray *disabledUrlPatterns;
 @property(atomic, assign, readonly) BOOL nsurlconnectionProxyEnable;
 @property(atomic, assign, readonly) BOOL startupScreenshotEnabled;
 @property(atomic, assign, readonly) BOOL webviewStripQueryparams;
@@ -46,6 +47,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(atomic, assign, readonly) BOOL captureCoordinatesEnabled;
 @property(atomic, assign, readonly) BOOL collectNetworkRequestMetrics;
 @property(atomic, assign, readonly) BOOL automaticViewCaptureEnabled;
+@property(atomic, assign, readonly) BOOL oslogTrackingEnabled;
 @property(atomic, strong, readonly) NSString *traceIdHeader;
 @property(atomic, strong, readonly) NSString *networkCapturePublicKey;
 

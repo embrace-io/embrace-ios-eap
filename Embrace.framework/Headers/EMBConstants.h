@@ -9,9 +9,9 @@
 #import <Foundation/Foundation.h>
 
 #ifndef DEBUG
-#define EMBLogDefaultLevel EMBLogLevelTrace
+#define EMBLogDefaultLevel EMBLogLevelInfo
 #else
-#define EMBLogDefaultLevel EMBLogLevelTrace
+#define EMBLogDefaultLevel EMBLogLevelDebug
 #endif
 
 typedef NS_ENUM(NSInteger, EMBLogLevel) {

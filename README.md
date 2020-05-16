@@ -30,6 +30,7 @@ Settings can be specified in an `Embrace-Info.plist` file, which must be include
 |MAX_SESSION_SECONDS|integer|nil|Enables timed session mode when set, which will terminate each active session after the given number of seconds has passed.|
 |WEBVIEW_ENABLE|bool|true|Control whether webview information is captured|
 |WEBVIEW_STRIP_QUERYPARAMS|bool|false|Control whether webview query parameters are captured|
+|DISABLED_URL_PATTERNS|array[string]|nil|A list of regex patterns, matching urls are completely ignored and never tracked|
 |ENABLE_AUTOMATIC_VIEW_CAPTURE|bool|true|Control whether automatic view capture is enabled, disable this if you are using custom view API|
 
 ## Logging guidelines
