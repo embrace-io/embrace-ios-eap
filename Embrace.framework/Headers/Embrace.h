@@ -470,7 +470,7 @@ FOUNDATION_EXPORT const unsigned char EmbraceVersionString[];
 /**
  Logs enhanced metrics for a given URLSessionTask
  */
-- (void)logURLSessionTaskMetrics:(NSURLSessionTaskMetrics *)metrics forURLSessionTask:(NSURLSessionTask *)task DEPRECATED_MSG_ATTRIBUTE("NSURLSessionTaskMetrics interactions are now recorded automatically by the SDK. This method will be removed in future versions.");
+- (void)logURLSessionTaskMetrics:(NSURLSessionTaskMetrics *)metrics forURLSessionTask:(NSURLSessionTask *)task DEPRECATED_MSG_ATTRIBUTE("NSURLSessionTaskMetrics interactions are now recorded automatically by the SDK. This method will be removed in future versions.") API_AVAILABLE(ios(10.0));
 
 /**
  DEPRECATED
