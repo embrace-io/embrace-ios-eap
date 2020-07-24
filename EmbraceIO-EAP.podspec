@@ -12,14 +12,17 @@ Pod::Spec.new do |s|
   s.license               = { :type => "Commercial", :text => "Copyright 2018 Embrace.io" }
   s.author                = "Embrace.io"
   s.documentation_url     = "https://docs.embrace.io"
-
-  s.platform              = :ios, "8.0"
   s.source                = { :git => "https://github.com/embrace-io/embrace-ios-eap.git" }
-  s.source_files          = "Embrace.framework/Headers/*.h"
-  s.public_header_files   = "Embrace.framework/Headers/*.h"
-  s.vendored_frameworks   = ["Embrace.framework"]
   s.preserve_paths        = ["run.sh", "upload"]
   s.requires_arc          = true
   s.module_name           = 'EmbraceIO'
-
+  
+  s.ios.deployment_target     = '8.0'
+  s.ios.source_files          = "iOS/Embrace.framework/Headers/*.h"
+  s.ios.public_header_files   = "iOS/Embrace.framework/Headers/*.h"
+  s.ios.vendored_frameworks   = "iOS/Embrace.framework"
+  s.tvos.deployment_target    = '9.0'
+  s.tvos.source_files         = "tvOS/Embrace.framework/Headers/*.h"
+  s.tvos.public_header_files  = "tvOS/Embrace.framework/Headers/*.h"
+  s.tvos.vendored_frameworks  = "tvOS/Embrace.framework"
 end
