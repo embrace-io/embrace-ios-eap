@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name                  = "EmbraceIO-EAP"
-  s.version               = "5.0.3"
+  s.version               = "5.0.4"
   s.summary               = "Visibility into your users that you didn't have before"
   s.description           = <<-DESC
                             Embrace is the only performance monitoring platform focused solely on mobile. We are built
