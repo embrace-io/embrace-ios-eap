@@ -11,7 +11,7 @@ Pod::Spec.new do |s|
   s.homepage              = "http://embrace.io"
   s.license               = { :type => "Commercial", :text => "Copyright 2018 Embrace.io" }
   s.author                = "Embrace.io"
-  s.documentation_url     = "https://docs.embrace.io"
+  s.documentation_url     = "https://embrace.io/docs/"
   s.source                = { :git => "https://github.com/embrace-io/embrace-ios-eap.git" }
   s.preserve_paths        = ["run.sh", "upload"]
   s.requires_arc          = true
