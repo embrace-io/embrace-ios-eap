@@ -1,5 +1,3 @@
-![embrace](https://s3.amazonaws.com/embrace-downloads-prod/embrace.png)
-
 [![CocoaPods Compatible](https://img.shields.io/cocoapods/v/EmbraceIO.svg)](https://img.shields.io/cocoapods/v/EmbraceIO.svg)
 [![Platform](https://img.shields.io/cocoapods/p/EmbraceIO.svg?style=flat)](https://cocoadocs.org/docsets/EmbraceIO)
 
